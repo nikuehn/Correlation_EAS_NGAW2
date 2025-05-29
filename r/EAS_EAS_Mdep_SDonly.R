@@ -29,19 +29,12 @@ convert_to_numeric <- function(str) {
 }
 
 ################################################################################
-#dir_base <- '/Users/nico/GROUNDMOTION/PROJECTS/RESID_VAR/'
-#dir_data <- file.path(dir_base, 'DATA/totres/')
-#dir_stan <- file.path(dir_base, 'STAN')
-#dir_ngaw2 <- '/Users/nico/GROUNDMOTION/PROJECTS/NONERGODIC/DATA_NGAW2/'
-#dir_res <- file.path(dir_base, 'COR', 'RESULTS', 'PSA_EAS_Mdep2')
 
-dir_base     <- "D:/Documents/PROJECTS/PEER/NGA-West2/FAS/R/"
-#dir_base_psa <- "D:/Documents/PROJECTS/PEER/NGA-West2/PSA/R/"
-dir_data     <- paste0(dir_base, "Residuals/Mod",Mod,"/")
-#dir_data_psa <- paste0(dir_base_psa, "Residuals/Mod",Mod,"/")
-dir_stan     <- paste0(dir_base, "CorrelationsBayesBivariate/R Script/EAS_EAS_Mdep_SDonly/")
-dir_ngaw2    <- paste0(dir_base, "Data/")
-dir_res      <- paste0(dir_base, "CorrelationsBayesBivariate/InterIM/Mod",Mod,"/",IMtype1,"/")
+dir_base     <- "."
+dir_data     <- file.path(dir_base, "../data/")
+dir_stan     <- file.path(dir_base, "../stan/")
+dir_ngaw2    <- file.path(dir_base, "../data/")
+dir_res      <- file.path(dir_base, "results", paste0("Mod",Mod),IMtype1)
 
 ################################################################################
 # read NGA W2 flatfile and total FAS residuals
@@ -196,7 +189,7 @@ for(k1 in 1:n_target) {
     k <- k + 1
   }
 }
-save(results_cor_rv, results_cor_summary, file=paste0(dir_res, 'results_',IMtype1,'_',IMtype2,'_Mdep_SDonly.Rdata'))
+save(results_cor_rv, results_cor_summary, file=file.path(dir_res, 'results_',IMtype1,'_',IMtype2,'_Mdep_SDonly.Rdata'))
 
 load(file=paste0(dir_res, 'results_',IMtype1,'_',IMtype2,'_Mdep_SDonly.Rdata'))
 for(k in 1:length(results_cor_summary)) {
@@ -210,7 +203,7 @@ res_summary <- results_cor_summary[[1]]
 for(k in 2:length(results_cor_summary)) {
   res_summary <- rbind(res_summary, results_cor_summary[[k]])
 }
-write.csv(res_summary, file=paste0(dir_res, "summary_",IMtype1,"_",IMtype2,"_Mdep_SDonly.csv"),
+write.csv(res_summary, file=file.path(dir_res, "summary_",IMtype1,"_",IMtype2,"_Mdep_SDonly.csv"),
           row.names = FALSE)
 
 
@@ -230,6 +223,6 @@ names_summary2 <- unlist(lapply(names(results_cor_rv[[k]][3:length(results_cor_r
     paste(x, 'q975', sep = '_'))
 }))
 df_summary2 <- data.frame(res_summary2) %>% set_names(c('T1','T2',names_summary2))
-write.csv(df_summary2, file=paste0(dir_res,"results_",IMtype1,"_",IMtype2,"_Mdep_SDonly.csv"),
+write.csv(df_summary2, file=file.path(dir_res,"results_",IMtype1,"_",IMtype2,"_Mdep_SDonly.csv"),
           row.names = names_target)
 
