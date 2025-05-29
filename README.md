@@ -1,0 +1,1 @@
+Data and Scripts for the paper "Empirical Bayesian interfrequency and interintensity correlations of horizontal Fourier amplitude spectra using NGA-West2 data" by Campbell,KW, Kuehn, N, and Bozorgnia, Y, accepted for publication in Earthquake Spectra.
